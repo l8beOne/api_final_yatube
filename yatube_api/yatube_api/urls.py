@@ -6,7 +6,7 @@ from api.urls import router_1_0_3
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(router_1_0_3.urls)),
+    path('api/', include(router_1_0_3.urls)),
     path(
         'redoc/',
         TemplateView.as_view(template_name='redoc.html'),

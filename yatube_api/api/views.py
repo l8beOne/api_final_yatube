@@ -25,16 +25,6 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    def perform_update(self, serializer):
-        if serializer.instance.author != self.request.user:
-            raise PermissionDenied('Изменение чужого контента запрещено!')
-        super().perform_update(serializer)
-
-    def perform_destroy(self, serializer):
-        if serializer.author != self.request.user:
-            raise PermissionDenied('Изменение чужого контента запрещено!')
-        super().perform_destroy(serializer)
-
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
@@ -44,15 +34,15 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
+    @property
     def post_create(self):
-        post = get_object_or_404(Post, id=self.kwargs.get('post_id'))
-        return post
+        return get_object_or_404(Post, id=self.kwargs.get('post_id'))
 
     def get_queryset(self):
-        return self.post_create().comments.all()
+        return self.post_create.comments.all()
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, post=self.post_create())
+        serializer.save(author=self.request.user, post=self.post_create)
 
     def perform_update(self, serializer):
         if serializer.instance.author != self.request.user:
@@ -72,8 +62,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        user = self.request.user
-        return user.follower.select_related('user')
+        return self.request.user.follower.select_related('user')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

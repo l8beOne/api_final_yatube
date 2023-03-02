@@ -36,6 +36,7 @@ class Post(models.Model):
     )
 
     class Meta:
+        ordering = ('-pub_date',)
         default_related_name = 'posts'
 
     def __str__(self):
@@ -45,13 +46,11 @@ class Post(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
-        related_name='comments'
+        on_delete=models.CASCADE
     )
     post = models.ForeignKey(
         Post,
-        on_delete=models.CASCADE,
-        related_name='comments'
+        on_delete=models.CASCADE
     )
     text = models.TextField()
     created = models.DateTimeField(
@@ -59,6 +58,10 @@ class Comment(models.Model):
         auto_now_add=True,
         db_index=True
     )
+
+    class Meta:
+        ordering = ['-created']
+        default_related_name = 'comments'
 
 
 class Follow(models.Model):
