@@ -1,37 +1,42 @@
-# api_final
+# api_final_yatube
+<h1 align="center"><img src="https://camo.githubusercontent.com/4fa9a5bdefafee7e59ad2086429306dfc0c902d0db4d2d1fdfb534b1767d9f62/68747470733a2f2f646576656c6f706572732e67697068792e636f6d2f6272616e63682f6d61737465722f7374617469632f6170692d35313264333663303936363236383237313731303861333862626235633537642e676966" height="300" width="400"/></h1>
 
-## Описание:
+## Описание проекта:
+REST API для проекта Yatube. Реализована аутентификация по JWT токену. API (от англ. Application Programming Interface, «программный интерфейс приложения») — это интерфейс для обмена данными. Слово «программный» означает, что API служат в первую очередь для взаимодействия программ.
+## Технологии:
+* Python 3.9.10
+* Django 3.2
+* Django Rest Framework 3.12.4
+* SQlite3
+* Simple JWT
+## Как запустить проект:
+Склонируйте репозиторий:
 
-___
+```
+git clone git@github.com:l8beOne/api_final_yatube.git
+```
 
-API (от англ. Application Programming Interface, «программный интерфейс приложения») — это интерфейс для обмена данными. Слово «программный» означает, что API служат в первую очередь для взаимодействия программ. 
+Установите и активируйте виртуальное окружение:
 
-___
+```
+python -m venv venv
+source venv/Scripts/activate
+```
 
-## Установка
+Установите зависимости из файла requirements.txt:
 
-___
+```
+pip install -r requirements.txt
+```
 
-Установить виртуальное окружение, установить requirements.txt, запустить миграции
+Перейдите в папку api_yamdb/api_yamdb и примените миграции.
 
-___
+```
+python manage.py migrate
+```
 
-### Примеры
+Запустите проект:
 
-___
-
-POST request на создание нового поста http://127.0.0.1:8000/api/v1/posts/:
-{
-    "text": "string",
-    "image": "string",
-    "group": 0
-}
-resonse:
-{
-    "id": 0,
-    "author": "string",
-    "text": "string",
-    "pub_date": "2019-08-24T14:15:22Z",
-    "image": "string",
-    "group": 0
-}
+```
+python manage.py runserver
+```
